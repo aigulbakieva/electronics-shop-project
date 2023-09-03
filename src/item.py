@@ -20,6 +20,19 @@ class Item:
         self.quantity = quantity
         self.all.append(self)
 
+    def __repr__(self):
+        """
+        Вывод информации о классе Item.
+        """
+        return f"{self.__class__.__name__}('{self.__name}', {self.price}, {self.quantity})"
+
+
+    def __str__(self):
+        """
+        Информация о классе. Вывод значения поля self.name.
+        """
+        return self.__name
+
 
     @property
     def name(self):
@@ -43,7 +56,7 @@ class Item:
         with open(file_path, "r", encoding='windows-1251') as csvfile:
             reader = csv.DictReader(csvfile)
             for row in reader:
-                Item(row['name'], float(row['price']), int(row['quantity']))
+                cls(row['name'], float(row['price']), int(row['quantity']))
 
     def calculate_total_price(self) -> float:
         """

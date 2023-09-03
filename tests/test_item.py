@@ -39,3 +39,10 @@ def test_string_to_number(item):
 def test_instantiate_from_csv(item):
     item.instantiate_from_csv("src/items.csv")
     assert len(Item.all) == 5
+
+def test_repr(item):
+    assert item.__repr__() == "Item('Смартфон', 1000.0, 20)"
+
+
+def test_str(item):
+    assert item.__str__() == "Смартфон"
