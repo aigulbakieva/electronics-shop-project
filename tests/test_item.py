@@ -1,9 +1,12 @@
 import pytest
 from src.item import Item
 from src.phone import Phone
+from src.item import InstantiateCSVError
 
-#item1 = Item("Смартфон", 1000, 20)
-#item2 = Item("Ноутбоук", 20000, 5)
+
+
+# item1 = Item("Смартфон", 1000, 20)
+# item2 = Item("Ноутбоук", 20000, 5)
 
 @pytest.fixture
 def item():
@@ -13,7 +16,6 @@ def item():
 @pytest.fixture
 def test_phone1():
     return Phone("iPhone 14", 120_000, 5, 2)
-
 
 
 def test_init(item):
@@ -39,13 +41,25 @@ def test_apply_discount(item):
     item.apply_discount()
     assert item.price == 150.0
 
+
 def test_string_to_number(item):
     assert item.string_to_number("5.0") == 5
     assert item.string_to_number("6.5") == 6
 
+
 def test_instantiate_from_csv(item):
     item.instantiate_from_csv("src/items.csv")
     assert len(Item.all) == 5
+
+
+def test_instantiate_from_csv_1():
+    with pytest.raises(InstantiateCSVError, match='Файл item.csv поврежден'):
+        Item.instantiate_from_csv('items.csv')
+
+def test_instantiate_from_csv_2():
+    with pytest.raises(FileNotFoundError, match='Отсутствует файл'):
+        Item.instantiate_from_csv('item.csv')
+
 
 def test_repr(item):
     assert item.__repr__() == "Item('Смартфон', 1000.0, 20)"
