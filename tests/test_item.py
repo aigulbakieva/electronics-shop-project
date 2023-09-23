@@ -62,7 +62,7 @@ def test_instantiate_from_csv_2():
 
 def test_instantiate_from_csv_3():
     with pytest.raises(InstantiateCSVError, match='Файл item.csv поврежден'):
-        Item.instantiate_from_csv(file_path)
+        Item.instantiate_from_csv('items.csv')
 
 
 def test_repr(item):
