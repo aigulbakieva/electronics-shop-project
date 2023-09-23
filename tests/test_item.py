@@ -58,11 +58,11 @@ file_path = os.path.join(os.path.dirname(__file__), 'items.csv')
 
 def test_instantiate_from_csv_2():
     with pytest.raises(FileNotFoundError, match='Отстутствует файл'):
-       Item.instantiate_from_csv(file_path)
+       Item.instantiate_from_csv('item.csv')
 
 def test_instantiate_from_csv_3():
     with pytest.raises(InstantiateCSVError, match='Файл item.csv поврежден'):
-        Item.instantiate_from_csv('items.csv')
+        Item.instantiate_from_csv(file_path)
 
 
 def test_repr(item):
