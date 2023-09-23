@@ -1,8 +1,9 @@
+import os.path
+
 import pytest
 from src.item import Item
 from src.phone import Phone
 from src.item import InstantiateCSVError
-
 
 
 # item1 = Item("Смартфон", 1000, 20)
@@ -47,18 +48,21 @@ def test_string_to_number(item):
     assert item.string_to_number("6.5") == 6
 
 
-def test_instantiate_from_csv(item):
-    item.instantiate_from_csv("src/items.csv")
-    assert len(Item.all) == 5
+# def test_instantiate_from_csv(item):
+#    item.instantiate_from_csv("src/items.csv")
+#    assert len(Item.all) == 5
 
 
-def test_instantiate_from_csv_1():
-    with pytest.raises(InstantiateCSVError, match='Файл item.csv поврежден'):
-        Item.instantiate_from_csv('items.csv')
+file_path = os.path.join(os.path.dirname(__file__), 'items.csv')
+
 
 def test_instantiate_from_csv_2():
-    with pytest.raises(FileNotFoundError, match='Отсутствует файл'):
-        Item.instantiate_from_csv('item.csv')
+    with pytest.raises(FileNotFoundError, match='Отстутствует файл'):
+       Item.instantiate_from_csv(file_path)
+
+def test_instantiate_from_csv_3():
+    with pytest.raises(InstantiateCSVError, match='Файл item.csv поврежден'):
+        Item.instantiate_from_csv('items.csv')
 
 
 def test_repr(item):

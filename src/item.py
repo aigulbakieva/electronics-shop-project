@@ -59,18 +59,14 @@ class Item:
         cls.all.clear()
         file_path = os.path.join(os.path.dirname(__file__), filename)
         try:
-            with open(file_path,  encoding='windows-1251') as csvfile:
+            with open(file_path, encoding='windows-1251') as csvfile:
                 reader = csv.DictReader(csvfile)
                 for row in reader:
                     if not ('name' in row and 'price' in row and 'quantity' in row):
                         raise InstantiateCSVError
-                    item = cls(row['name'], Item.string_to_number(row['price']), Item.string_to_number(row['quantity']))
-        except InstantiateCSVError as ex:
-            print(ex.message)
+                    cls(row['name'], Item.string_to_number(row['price']), Item.string_to_number(row['quantity']))
         except FileNotFoundError:
-            print('Отсутствует файл')
-
-
+            raise FileNotFoundError('Отстутствует файл')
 
     def calculate_total_price(self) -> float:
         """
